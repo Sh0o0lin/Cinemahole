@@ -1,0 +1,22 @@
+<div class="blog-slider relative m-auto dark:bg-gray-600">
+    <div class="blog-slider__wrp swiper-wrapper">
+        {% for movie in movies %}
+        <div class="blog-slider__item flex items-center swiper-slide ">
+            <div
+                class="blog-slider__img flex-shrink-0  overflow-hidden after:absolute after:top-0 after:left-0 after:w-full after:h-full">
+                <img class="w-full h-full  block opacity-0"
+                    src="https://cinemahole.com/media/720/{{ movie.posters.0.filename }}.jpg" alt="poster">
+            </div>
+            <div class="blog-slider__content">
+                <span class="blog-slider__code block font-medium dark:text-white">{{ movie.release_date }}</span>
+                <div class="blog-slider__title text-2xl font-bold dark:text-white">{{ movie.title }}</div>
+                <div class="blog-slider__text leading-6 dark:text-white">{{ movie.overview|safe|truncatewords:"40"|linebreaks }}</div>
+                <a href="{% url 'movie:details' pk=movie.id %}"
+                    class="blog-slider__button inline-flex font-medium no-underline justify-center text-center tracking-tighter dark:text-white">FIND
+                    MORE</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="blog-slider__pagination"></div>
+</div>

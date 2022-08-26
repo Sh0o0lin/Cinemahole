@@ -1,0 +1,72 @@
+{% load movieDataFormat %}
+<div class="flex-shrink-0 w-96 max-w-xs overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
+    <img class="object-cover object-center w-full h-56"
+        src="https://cinemahole.com/media/720/{{ movie.backdrops.0.filename }}.jpg" alt="backdrop" />
+
+    <div class="flex justify-between px-6 py-3 bg-gray-900">
+        <svg class="h-6 w-6 text-white" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+            stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" />
+            <rect x="4" y="5" width="16" height="16" rx="2" />
+            <line x1="16" y1="3" x2="16" y2="7" />
+            <line x1="8" y1="3" x2="8" y2="7" />
+            <line x1="4" y1="11" x2="20" y2="11" />
+            <line x1="11" y1="15" x2="12" y2="15" />
+            <line x1="12" y1="15" x2="12" y2="18" />
+        </svg>
+        <span class="mx-2 text-white">{{ movie.release_date }}</span>
+
+        <svg class="h-6 w-4 ml-auto text-white" viewBox="0 0 24 24" fill="#ffff" stroke="currentColor" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polygon
+                points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+        </svg>
+        <h1 class="text-base mx-1 font-semibold text-white">{{ movie.vote_average|floatformat:1 }}</h1>
+    </div>
+
+    <div class="px-6 py-4">
+        <h1 class="text-xl font-semibold text-gray-800 dark:text-white"><a href="{% url 'movie:details' pk=movie.id %}">{{ movie.title }}</a></h1>
+
+        <p class="py-2 text-gray-700 dark:text-gray-400">{{ movie.tagline }}.</p>
+
+        <div class="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+            <svg class="h-6 w-6 text-gray-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <path d="M5 7h7m-2 -2v2a5 8 0 0 1 -5 8m1 -4a7 4 0 0 0 6.7 4" />
+                <path d="M11 19l4 -9l4 9m-.9 -2h-6.2" />
+                
+            </svg>
+            <h1 class="px-2 text-sm">{{ movie.original_language.name }}</h1>
+        </div>
+
+        <div class="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+            <svg class="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+
+
+            <h1 class="px-2 text-sm">{{ movie.runtime|runtimeToHour }}</h1>
+        </div>
+
+        <div class="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+            <svg class="h-6 w-6 text-gray-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+            </svg>
+            <h1 class="px-2 text-sm">{{ movie.credit.cast.all|castList }}</h1>
+        </div>
+    </div>
+    <div class="px-6 py-4 text-gray-700 dark:text-gray-200">
+        <div class="grid grid-cols-4 gap-1">
+            {% for genre in movie.genres.all %}
+            <h1 class="text-xs">{{ genre.name }}</h1>
+            {% endfor %}
+        </div>
+    </div>
+</div>
